@@ -1,6 +1,9 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
+import { bootstrap } from './config/bootstrap';
+bootstrap();
+
 import AppNavigator from './navigation/AppNavigator';
 
 export default class App extends React.Component {
@@ -38,6 +41,13 @@ export default class App extends React.Component {
         ...Icon.Ionicons.font,
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
+        icomoon: require('./assets/fonts/icomoon.ttf'),
+        'fontawesome': require('./assets/fonts/fontawesome.ttf'),
+        'Righteous-Regular': require('./assets/fonts/Righteous-Regular.ttf'),
+        'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
+        'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
+        'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
+        'Roboto-Light': require('./assets/fonts/Roboto-Light.ttf'),
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       }),
     ]);
