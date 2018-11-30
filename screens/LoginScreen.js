@@ -22,15 +22,53 @@ export default class LoginScreen extends React.Component {
     header: null,
   };
 
-  onLoginButtonPressed = () => {
-     this.props.navigation.navigate('App');
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+    }
+  };
+
+  async onLoginButtonPressed() {
+    console.log(this.state);
+    let response = await this._postAuth('http://cukejianya.com:3000/login');
+    if (response.success) {
+      this.props.navigation.navigate('App');
+    }
   };
 
   onSignUpButtonPressed = () => {
     this.props.navigation.navigate('SignUp');
   };
 
-    getThemeImageSource = (theme) => (require('../assets/images/moves-logo.png'));
+  async _postAuth(url) {
+    let body = {
+      username: this.state.username,
+      password: this.state.password,
+    }
+    let response;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(body)
+      });
+    } catch (err) {
+      return err;
+    }
+
+    return response.json();
+  };
+
+  _setUsername = (username) => {
+    this.setState({username: username})
+  };
+
+  _setPassword = (password) => {
+    this.setState({password: password})
+  };
+
+  getThemeImageSource = (theme) => (require('../assets/images/moves-logo.png'));
 
   renderImage = () => (
     <Image style={styles.image} source={this.getThemeImageSource(RkTheme.current)} />
@@ -59,13 +97,20 @@ export default class LoginScreen extends React.Component {
       </View>
       <View style={styles.content}>
         <View>
-          <RkTextInput rkType='rounded' placeholder='Username' />
-          <RkTextInput rkType='rounded' placeholder='Password' secureTextEntry />
+          <RkTextInput
+            rkType='rounded'
+            placeholder='Username'
+            onChangeText={text => {this._setUsername(text)}}/>
+          <RkTextInput
+              rkType='rounded'
+              placeholder='Password'
+              secureTextEntry
+              onChangeText={text => {this._setPassword(text)}}/>
           <GradientButton
             style={styles.save}
             rkType='large'
             text='LOGIN'
-            onPress={this.onLoginButtonPressed}
+            onPress={() => { this.onLoginButtonPressed() }}
           />
         </View>
         <View style={styles.footer}>
