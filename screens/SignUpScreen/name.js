@@ -12,28 +12,62 @@ import {
   RkTheme,
   RkAvoidKeyboard,
 } from 'react-native-ui-kitten';
-import { GradientButton } from '../components/gradientButton';
-import { scaleVertical } from '../utils/scale';
+import { GradientButton } from '../../components/gradientButton';
+import { scaleVertical } from '../../utils/scale';
+import { validNameCheck } from '../../utils/stringCheck';
 
-export default class SignUpScreen extends React.Component {
+export default class Email extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      first: '',
+      last: '',
+      canActiveNextButton: false,
+    }
+  }
 
-
-  getThemeImageSource = (theme) => (require('../assets/images/moves-logo.png'));
+  getThemeImageSource = (theme) => (require('../../assets/images/moves-logo.png'));
 
   renderImage = () => (
     <Image style={styles.image} source={this.getThemeImageSource(RkTheme.current)} />
   );
 
   onNextButtonPressed = () => {
-    this.props.navigation.goBack();
+    const { navigation } = this.props;
+    if (this.state.canActiveNextButton) {
+      signUpData = this._createNewSignUpData({
+        first: this.state.first, 
+        last: this.state.last
+      });
+      navigation.navigate('dob', {signUpData});
+    }
   };
+
+  _createNewSignUpData = (newData) => Object.assign(newData, this._getSignUpData());  
+
+  _getSignUpData = () => this.props.navigation.getParam('signUpData', {});
 
   onSignInButtonPressed = () => {
     this.props.navigation.navigate('Auth');
+  };
+
+  _setFirstname = (first) => {
+    this.setState({first: first});
+    this._validInput();
+  };
+
+  _setLastname = (last) => {
+    this.setState({last: last});
+    this._validInput();
+  };
+    
+  _validInput = () => {
+    let isValid = validNameCheck(this.state.first) && validNameCheck(this.state.last);
+    this.setState({canActiveNextButton: isValid});  
   };
 
   render = () => (
@@ -47,13 +81,14 @@ export default class SignUpScreen extends React.Component {
       </View>
       <View style={styles.content}>
         <View>
-          <RkTextInput rkType='rounded' placeholder='Firstname' />
-          <RkTextInput rkType='rounded' placeholder='Lastname' />
+          <RkTextInput rkType='rounded' placeholder='Firstname' onChangeText={this._setFirstname}/>
+          <RkTextInput rkType='rounded' placeholder='Lastname' onChangeText={this._setLastname}/>
           <GradientButton
-            style={styles.save}
+            style={this.state.canActiveNextButton ? styles.activeButton : styles.deactiveButton}
             rkType='large'
             text='NEXT'
-            onPress={this.nextButtonPressed}
+            onPress={this.onNextButtonPressed}
+            disabled={!this.state.canActiveNextButton}
           />
         </View>
         <View style={styles.footer}>
@@ -91,8 +126,12 @@ const styles = RkStyleSheet.create(theme => ({
     justifyContent: 'center',
     alignItems: 'stretch',
   },
-  save: {
-    marginVertical: 20,
+  activeButton: {
+    marginVertical: 30,
+  },
+  deactiveButton: {
+    marginVertical: 30,
+    opacity: 0.5,
   },
   buttons: {
     flexDirection: 'row',

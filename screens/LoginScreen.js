@@ -31,7 +31,6 @@ export default class LoginScreen extends React.Component {
   };
 
   async onLoginButtonPressed() {
-    console.log(this.state);
     let response = await this._postAuth('http://cukejianya.com:3000/login');
     if (response.success) {
       this.props.navigation.navigate('App');
@@ -51,7 +50,10 @@ export default class LoginScreen extends React.Component {
     try {
       response = await fetch(url, {
         method: 'POST',
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
       });
     } catch (err) {
       return err;
@@ -117,7 +119,7 @@ export default class LoginScreen extends React.Component {
           <View style={styles.textRow}>
             <RkText rkType='primary3'>Don’t have an account?</RkText>
             <RkButton rkType='clear' onPress={this.onSignUpButtonPressed}>
-              <RkText rkType='header6'>Sign up now</RkText>
+              <RkText rkType='header6'> Sign up now</RkText>
             </RkButton>
           </View>
         </View>

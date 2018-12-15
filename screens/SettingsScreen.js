@@ -21,7 +21,6 @@ export default class SettingsScreen extends React.Component {
   static navigationOptions = {
     title: 'Settings',
     headerStyle: {
-      hey: console.log(RkTheme.current.colors),
       backgroundColor: RkTheme.current.colors.gradients,
     },
     headerTintColor: '#fff',
@@ -43,13 +42,11 @@ export default class SettingsScreen extends React.Component {
     this.setState({ shouldRefresh: value });
   };
 
-  _signOutAsync = async () => {
-    await AsyncStorage.clear();
+  _signOut = () => {
     this.props.navigation.navigate('Auth');
   };
 
   render() {
-  console.log(RkTheme.current.colors.gradients.base[0]);
     return (
       <ScrollView style={styles.container}>
         <View style={styles.section}>
@@ -107,7 +104,7 @@ export default class SettingsScreen extends React.Component {
           <View style={styles.row}>
             <TouchableOpacity
               style={styles.rowButton}
-              onPress={this._signOutAsync}
+              onPress={this._signOut}
             >
               <RkText rkType='header6'>Logout</RkText>
             </TouchableOpacity>

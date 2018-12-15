@@ -14,6 +14,10 @@ export class GradientButton extends RkComponent {
     text: {},
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps !== this.props;
+  }
+
   renderContent = (textStyle) => {
     const hasText = this.props.text === undefined;
     return hasText ? this.props.children : this.renderText(textStyle);

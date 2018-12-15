@@ -256,6 +256,21 @@ export const bootstrap = () => {
     },
   });
 
+  RkTheme.setType('RkTextInput', 'underline', {
+    fontSize: theme => theme.fonts.sizes.h6,
+    underlineWidth: 2,
+    placeholderTextColor: theme => theme.colors.input.text,
+    container: {
+      backgroundColor: 'transparent',
+    },
+    input: {
+      textAlign: 'center',
+      marginVertical: {
+        ios: scaleVertical(15),
+        android: scaleVertical(4),
+      },
+    },
+  });
 
   RkTheme.setType('RkTextInput', 'right', {
     input: {
