@@ -37,17 +37,22 @@ export default class Email extends React.Component {
     <Image style={styles.image} source={this.getThemeImageSource(RkTheme.current)} />
   );
 
-  onNextButtonPressed = () => {
+  async onRegisterButtonPressed() {
     const { navigation } = this.props;
     if (this.state.canActiveNextButton) {
       signUpData = this._createNewSignUpData({
         password: this.state.password, 
       });
       this.setState({sendingData: true})
-      this._postUserRegister('http://cukejianya.com:3000/register', signUpData).then( (resp) => {
-        this.setState({sendingData: false});
-        navigation.navigate('App')
-      });
+      let response = await this._postUserRegister(
+        'http://cukejianya.com:3000/register',
+        signUpData
+      )
+      console.log(response);
+      this.setState({sendingData: false});
+      if (response.success) {
+        navigation.navigate('App');
+      }
     }
   };
 
@@ -117,9 +122,9 @@ export default class Email extends React.Component {
             <GradientButton
               style={this.state.canActiveNextButton ? styles.activeButton : styles.deactiveButton}
               rkType='large'
-              text='NEXT'
-              onPress={this.onNextButtonPressed}
+              text='Register'
               disabled={!this.state.canActiveNextButton}
+              onPress={() => this.onRegisterButtonPressed()}
             />
           </View>
           <View style={styles.footer}>

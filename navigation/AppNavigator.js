@@ -24,6 +24,6 @@ export default createSwitchNavigator(
     SignUp: SignUpStack,
   },
   {
-    initialRouteName: 'SignUp',
+    initialRouteName: 'App',
   }
 );

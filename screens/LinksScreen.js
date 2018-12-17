@@ -9,15 +9,30 @@ import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import moment from 'moment-timezone'
 
 import mapStyle from '../constants/MapStyle'
+import { MapCarousel } from '../components/index.js'
 
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
-    title: 'Map',
+    header: null,
   };
 
   constructor(props){
     super(props);
-    this.state ={ isLoading: true}
+    let move = {
+      title: 'A Course in Miracles',
+      street: '500 Upper Chesapeake Dr',
+      starttime: '2018-11-07T00:00:00.000Z',
+      endtime: '2018-11-07T02:00:00.000Z',
+      description: 'Maryland Room, no charge, anyone is welcome.',
+      lat: 39.5188422,
+      lng: -76.3461222,
+      country: "USA",
+      state: 'MD',
+      city: 'Bel Air'
+    }
+    this.state ={ isLoading: true,
+      dataSource: [move, move, move],
+    }
   }
 
   componentDidMount(){
@@ -27,7 +42,7 @@ export default class LinksScreen extends React.Component {
 
         this.setState({
           isLoading: false,
-          dataSource: responseJson['moves'],
+          // dataSource: responseJson['moves'],
         }, () => {})
       }).catch((error) =>{
         console.error(error);
@@ -44,6 +59,7 @@ export default class LinksScreen extends React.Component {
     }
 
     return (
+      <View style={{flex: 1}}>
       <MapView style={styles.map}
         initialRegion={{
             latitude: 39.2904,
@@ -53,29 +69,22 @@ export default class LinksScreen extends React.Component {
         }}
         provider={PROVIDER_GOOGLE}
         customMapStyle={mapStyle}
-     >
-        {this.state.dataSource.filter(move => {
-            let startTime = moment(move.starttime);
-            let endTime = moment(move.endtime);
-            let today = moment();
-
-            return  endTime > today && startTime < today.add(1, 'days');
-        }).map(marker => {
-            return (
-                <Marker
-                    coordinate={{latitude: marker.lat, longitude: marker.lng}}
-                    pinColor="#FFBF00"
-                >
-                    <Callout style={{ flex: 1, position: 'relative' }}>
-                        <Text>{marker.title}</Text>
-
-                        <Text>Start Time: {moment(marker.starttime).calendar()}</Text>
-                        <Text>End Time: {moment(marker.endtime).calendar()}</Text>
-                    </Callout>
-                </Marker>
-            )
+      >
+        {this.state.dataSource.map((marker, idx) => {
+          return (
+            <Marker
+              key={idx}
+              coordinate={{latitude: marker.lat, longitude: marker.lng}}
+              pinColor="#FFBF00"
+            />
+          )
         })}
       </MapView>
+        <MapCarousel
+          style={styles.carousel}
+          data={this.state.dataSource}
+        />
+      </View>
     );
   }
 }
@@ -88,4 +97,8 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  carousel: {
+    position: 'absolute',
+    bottom: 50,
+  }
 });

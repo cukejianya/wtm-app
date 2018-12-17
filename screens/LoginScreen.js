@@ -25,16 +25,20 @@ export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      email: '',
       password: '',
+      showErrorMessage: false,
     }
   };
 
   async onLoginButtonPressed() {
+    this.setState({showErrorMessage: false })
     let response = await this._postAuth('http://cukejianya.com:3000/login');
+    console.log(response);
     if (response.success) {
       this.props.navigation.navigate('App');
     }
+    this.setState({showErrorMessage: true })
   };
 
   onSignUpButtonPressed = () => {
@@ -43,7 +47,7 @@ export default class LoginScreen extends React.Component {
 
   async _postAuth(url) {
     let body = {
-      username: this.state.username,
+      email: this.state.email,
       password: this.state.password,
     }
     let response;
@@ -62,8 +66,8 @@ export default class LoginScreen extends React.Component {
     return response.json();
   };
 
-  _setUsername = (username) => {
-    this.setState({username: username})
+  _setEmail = (email) => {
+    this.setState({email: email})
   };
 
   _setPassword = (password) => {
@@ -76,56 +80,71 @@ export default class LoginScreen extends React.Component {
     <Image style={styles.image} source={this.getThemeImageSource(RkTheme.current)} />
   );
 
-  render = () => (
-    <RkAvoidKeyboard
-      style={styles.screen}
-      onStartShouldSetResponder={() => true}
-      onResponderRelease={() => Keyboard.dismiss()}>
-      <View style={styles.header}>
-        {this.renderImage()}
-        <RkText rkType='light h1'>Moves</RkText>
-        <RkText rkType='logo h0'>What's The Move?</RkText>
-      </View>
-      <View style={styles.buttons}>
-        <RkButton style={styles.button} rkType='social'>
-          <RkText rkType='awesome hero'>{FontAwesome.twitter}</RkText>
-        </RkButton>
-        <RkButton style={styles.button} rkType='social'>
-          <RkText rkType='awesome hero'>{FontAwesome.google}</RkText>
-        </RkButton>
-        <RkButton style={styles.button} rkType='social'>
-          <RkText rkType='awesome hero'>{FontAwesome.facebook}</RkText>
-        </RkButton>
-      </View>
-      <View style={styles.content}>
-        <View>
-          <RkTextInput
-            rkType='rounded'
-            placeholder='Username'
-            onChangeText={text => {this._setUsername(text)}}/>
-          <RkTextInput
+  render = () => {
+    let errorMessage;
+    if (this.state.showErrorMessage) {
+      errorMessage = (
+        <RkText rkType='secondary6'>
+          Password can contain letters, numbers and punctuation.
+        </RkText>
+      )
+    } else {
+      errorMessage = '';
+    }
+    return (
+      <RkAvoidKeyboard
+        style={styles.screen}
+        onStartShouldSetResponder={() => true}
+        onResponderRelease={() => Keyboard.dismiss()}>
+        <View style={styles.header}>
+          {this.renderImage()}
+          <RkText rkType='light h1'>Moves</RkText>
+          <RkText rkType='logo h0'>What's The Move?</RkText>
+        </View>
+        <View style={styles.buttons}>
+          <RkButton style={styles.button} rkType='social'>
+            <RkText rkType='awesome hero'>{FontAwesome.twitter}</RkText>
+          </RkButton>
+          <RkButton style={styles.button} rkType='social'>
+            <RkText rkType='awesome hero'>{FontAwesome.google}</RkText>
+          </RkButton>
+          <RkButton style={styles.button} rkType='social'>
+            <RkText rkType='awesome hero'>{FontAwesome.facebook}</RkText>
+          </RkButton>
+        </View>
+        <View style={styles.content}>
+          <View>
+            <RkTextInput
               rkType='rounded'
+              autoCapitalize='none'
+              placeholder='Email'
+              onChangeText={text => {this._setEmail(text)}}/>
+            <RkTextInput
+              rkType='rounded'
+              autoCapitalize='none'
               placeholder='Password'
               secureTextEntry
               onChangeText={text => {this._setPassword(text)}}/>
-          <GradientButton
-            style={styles.save}
-            rkType='large'
-            text='LOGIN'
-            onPress={() => { this.onLoginButtonPressed() }}
-          />
-        </View>
-        <View style={styles.footer}>
-          <View style={styles.textRow}>
-            <RkText rkType='primary3'>Don’t have an account?</RkText>
-            <RkButton rkType='clear' onPress={this.onSignUpButtonPressed}>
-              <RkText rkType='header6'> Sign up now</RkText>
-            </RkButton>
+            {errorMessage}
+            <GradientButton
+              style={styles.save}
+              rkType='large'
+              text='LOGIN'
+              onPress={() => { this.onLoginButtonPressed() }}
+            />
+          </View>
+          <View style={styles.footer}>
+            <View style={styles.textRow}>
+              <RkText rkType='primary3'>Don’t have an account?</RkText>
+              <RkButton rkType='clear' onPress={this.onSignUpButtonPressed}>
+                <RkText rkType='header6'> Sign up now</RkText>
+              </RkButton>
+            </View>
           </View>
         </View>
-      </View>
-    </RkAvoidKeyboard>
-  );
+      </RkAvoidKeyboard>
+    )
+  };
 }
 
 const styles = RkStyleSheet.create(theme => ({
