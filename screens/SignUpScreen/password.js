@@ -40,6 +40,8 @@ export default class Email extends React.Component {
   async onRegisterButtonPressed() {
     const { navigation } = this.props;
     if (this.state.canActiveNextButton) {
+      navigation.navigate('App'); // testing
+      return
       signUpData = this._createNewSignUpData({
         password: this.state.password, 
       });

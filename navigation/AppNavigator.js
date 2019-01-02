@@ -2,8 +2,9 @@ import React from 'react';
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
-import { LoginScreen, SignUpScreen} from '../screens/index';
+import { LinksScreen, LoginScreen, SignUpScreen} from '../screens/index';
 
+const AppStack = createStackNavigator({Map: LinksScreen})
 const AuthStack = createStackNavigator({ Login: LoginScreen });
 const SignUpStack = createStackNavigator(
   {
@@ -19,7 +20,7 @@ const SignUpStack = createStackNavigator(
 
 export default createSwitchNavigator(
   {
-    App: MainTabNavigator,
+    App: AppStack,
     Auth: AuthStack,
     SignUp: SignUpStack,
   },

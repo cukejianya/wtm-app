@@ -312,7 +312,6 @@ export const bootstrap = () => {
       borderRadius: 20,
       paddingHorizontal: 16,
     },
-
   });
 
   RkTheme.setType('RkTextInput', 'iconRight', {
