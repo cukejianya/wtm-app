@@ -44,10 +44,10 @@ export default class DOB extends React.Component {
     }
   };
 
-  _createNewSignUpData = (newData) => Object.assign(newData, this._getSignUpData());  
+  _createNewSignUpData = (newData) => Object.assign(newData, this._getSignUpData());
 
   _getSignUpData = () => this.props.navigation.getParam('signUpData', {});
-  
+
   openDatePicker = () => {
     this.textInput.inputRef.blur();
     this.setState({isDatePickerOpened: true});
@@ -76,7 +76,7 @@ export default class DOB extends React.Component {
 
   render = () => {
     let datepicker;
-  
+
     if (this.state.isDatePickerOpened) {
         datepicker = (<DatePicker
           onConfirm={this._onConfirm}
@@ -85,7 +85,7 @@ export default class DOB extends React.Component {
     } else {
       datepicker = '';
     }
-  
+
     return (
       <RkAvoidKeyboard
         style={styles.screen}
@@ -105,7 +105,7 @@ export default class DOB extends React.Component {
               autoCapitalize='none'
               value={this.state.dobValue}
               onChangeText={this._setEmail}
-              ref={elm => this.textInput = elm } 
+              ref={elm => this.textInput = elm }
             />
               { datepicker }
             <GradientButton
@@ -140,7 +140,7 @@ const styles = RkStyleSheet.create(theme => ({
   header: {
     alignSelf: 'center',
   },
-    
+
   image: {
     marginBottom: 10,
     height: scaleVertical(77),

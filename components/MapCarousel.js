@@ -11,17 +11,7 @@ import {Icon} from 'expo';
 import Carousel from 'react-native-snap-carousel';
 import moment from 'moment-timezone'
 
-const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
-
-function wp (percentage) {
-    const value = (percentage * viewportWidth) / 100;
-    return Math.round(value);
-}
-
-function hp (percentage) {
-    const value = (percentage * viewportHeight) / 100;
-    return Math.round(value);
-}
+import {hp, wp} from '../utils/scale';
 
 export class MapCarousel extends React.Component {
   _renderItem ({item, index}) {
@@ -48,7 +38,7 @@ export class MapCarousel extends React.Component {
               size={15}
               style={{ marginTop: 40 }}
               color='#a7a7a7'
-            />  0.95mi 
+            />  0.95mi
           </Text> */}
         </View>
       </View>
@@ -78,7 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     height: hp(40),
     width: wp(60),
-    flex: 1, 
+    flex: 1,
     flexDirection: 'column',
     borderRadius:10,
   },

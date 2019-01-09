@@ -40,14 +40,14 @@ export default class Email extends React.Component {
     const { navigation } = this.props;
     if (this.state.canActiveNextButton) {
       signUpData = this._createNewSignUpData({
-        first: this.state.first, 
+        first: this.state.first,
         last: this.state.last
       });
       navigation.navigate('dob', {signUpData});
     }
   };
 
-  _createNewSignUpData = (newData) => Object.assign(newData, this._getSignUpData());  
+  _createNewSignUpData = (newData) => Object.assign(newData, this._getSignUpData());
 
   _getSignUpData = () => this.props.navigation.getParam('signUpData', {});
 
@@ -64,10 +64,10 @@ export default class Email extends React.Component {
     this.setState({last: last});
     this._validInput();
   };
-    
+
   _validInput = () => {
     let isValid = validNameCheck(this.state.first) && validNameCheck(this.state.last);
-    this.setState({canActiveNextButton: isValid});  
+    this.setState({canActiveNextButton: isValid});
   };
 
   render = () => (

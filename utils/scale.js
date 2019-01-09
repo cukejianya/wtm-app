@@ -10,4 +10,14 @@ const scale = size => (width / guidelineBaseWidth) * size;
 const scaleVertical = size => (height / guidelineBaseHeight) * size;
 const scaleModerate = (size, factor = 0.5) => size + ((scale(size) - size) * factor);
 
-export { scale, scaleVertical, scaleModerate };
+function wp (percentage) {
+    const value = (percentage * width) / 100;
+    return Math.round(value);
+}
+
+function hp (percentage) {
+    const value = (percentage * height) / 100;
+    return Math.round(value);
+}
+
+export { scale, scaleVertical, scaleModerate, wp, hp };

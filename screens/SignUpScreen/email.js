@@ -42,7 +42,7 @@ export default class Email extends React.Component {
     }
   };
 
-  _createNewSignUpData = (newData) => Object.assign(newData, this._getSignUpData());  
+  _createNewSignUpData = (newData) => Object.assign(newData, this._getSignUpData());
 
   _getSignUpData = () => this.props.navigation.getParam('signUpData', {});
 
@@ -56,7 +56,7 @@ export default class Email extends React.Component {
   };
 
   _validInput = (text) => {
-    this.setState({canActiveNextButton: !!text});  
+    this.setState({canActiveNextButton: !!text});
   };
 
   render = () => (
@@ -71,7 +71,7 @@ export default class Email extends React.Component {
       <View style={styles.content}>
         <View>
           <RkTextInput
-            rkType='rounded' 
+            rkType='rounded'
             keyboardType='email-address'
             autoCapitalize='none'
             placeholder='Email'

@@ -314,6 +314,18 @@ export const bootstrap = () => {
     },
   });
 
+  RkTheme.setType('RkTextInput', 'iconLeft', {
+    label: {
+      fontSize: 24,
+      position: 'absolute',
+      left: 15,
+    },
+    input: {
+      marginLeft: scale(46),
+      placeholderTextColor: '#aaa',
+    },
+  });
+
   RkTheme.setType('RkTextInput', 'iconRight', {
     label: {
       position: 'absolute',

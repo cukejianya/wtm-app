@@ -1,6 +1,7 @@
 import React from 'react';
 import {
     ActivityIndicator,
+    StatusBar,
     StyleSheet,
     Text,
     View,
@@ -10,9 +11,9 @@ import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import moment from 'moment-timezone'
 
 import mapStyle from '../constants/MapStyle'
-import { MapCarousel } from '../components/index.js'
+import { MapCarousel, SearchBar } from '../components/index.js'
 
-export default class LinksScreen extends React.Component {
+export default class MapScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -114,7 +115,7 @@ export default class LinksScreen extends React.Component {
         host: "public"
       },
     ]
-    this.state ={ 
+    this.state ={
       isLoading: false,
       dataSource: move,
     }
@@ -196,7 +197,7 @@ export default class LinksScreen extends React.Component {
           return (
             <Marker
               key={idx}
-              identifier={idx}
+              identifier={`${idx}`}
               coordinate={{latitude: marker.lat, longitude: marker.lng}}
               pinColor="#FFBF00"
               onPress={e => this._moveToCard(e.nativeEvent)}
@@ -205,7 +206,11 @@ export default class LinksScreen extends React.Component {
         })}
               {/*onPress={this._clickOnMarker(idx)}*/}
         </MapView>
-        <SearchBar style={{position: 'absolute', top: 0}}/>
+        <SearchBar
+          onPress={() => this.props.navigation.navigate('List')}
+          icon='menu'
+          editable={false}
+        />
         <MapCarousel
           style={styles.carousel}
           ref={ref => {this.carousel = ref; }}
@@ -217,6 +222,8 @@ export default class LinksScreen extends React.Component {
   }
 }
 
+//this.props.navigation.navigate('App');
+
 const styles = StyleSheet.create({
   map: {
     position: 'absolute',
@@ -224,6 +231,10 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  searchBar: {
+    backgroundColor: 'yellow',
+    width: 150
   },
   carousel: {
     position: 'absolute',

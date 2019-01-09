@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ActivityIndicator,  
+  ActivityIndicator,
   View,
   Image,
   Keyboard,
@@ -43,7 +43,7 @@ export default class Email extends React.Component {
       navigation.navigate('App'); // testing
       return
       signUpData = this._createNewSignUpData({
-        password: this.state.password, 
+        password: this.state.password,
       });
       this.setState({sendingData: true})
       let response = await this._postUserRegister(
@@ -58,10 +58,10 @@ export default class Email extends React.Component {
     }
   };
 
-  _createNewSignUpData = (newData) => Object.assign(newData, this._getSignUpData());  
+  _createNewSignUpData = (newData) => Object.assign(newData, this._getSignUpData());
 
-  _getSignUpData = () => this.props.navigation.getParam('signUpData', {}); 
-  
+  _getSignUpData = () => this.props.navigation.getParam('signUpData', {});
+
   async _postUserRegister(url, data) {
     let response;
     try {
@@ -87,10 +87,10 @@ export default class Email extends React.Component {
     this.setState({password: password});
     this._validInput();
   };
-    
+
   _validInput = () => {
     let isValid = validNameCheck(this.state.password);
-    this.setState({canActiveNextButton: isValid});  
+    this.setState({canActiveNextButton: isValid});
   };
 
   render = () => {
@@ -103,12 +103,12 @@ export default class Email extends React.Component {
         )
 
       return loadingScreen;
-    } 
+    }
     let error = (
       <RkText rkType='secondary6'>
         Password can contain letters, numbers and punctuation.
       </RkText>
-    ); 
+    );
     return (
       <RkAvoidKeyboard
         style={styles.screen}
