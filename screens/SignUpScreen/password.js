@@ -50,7 +50,6 @@ export default class Email extends React.Component {
         'http://cukejianya.com:3000/register',
         signUpData
       )
-      console.log(response);
       this.setState({sendingData: false});
       if (response.success) {
         navigation.navigate('App');
