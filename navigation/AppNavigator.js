@@ -3,7 +3,14 @@ import { Animated, Easing } from 'react-native'
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
-import { MapScreen, ListScreen, LoginScreen, SignUpScreen} from '../screens/index';
+import {
+  EventScreen,
+  ListScreen,
+  LoginScreen,
+  MapScreen,
+  SettingsScreen,
+  SignUpScreen,
+} from '../screens/index';
 
 const transitionConfig = () => {
   let transitionSpec = {
@@ -34,10 +41,12 @@ const AppStack = createStackNavigator(
   {
     Map: MapScreen,
     List: ListScreen,
+    Event: EventScreen,
+    Settings: SettingsScreen,
   },
   {
     initialRouteName: 'Map',
-    transitionConfig,
+//    transitionConfig,
   }
 )
 
